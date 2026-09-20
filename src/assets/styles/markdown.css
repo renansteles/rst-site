@@ -1,0 +1,171 @@
+/* ============================================================
+   MARKDOWN: estilo do conteúdo renderizado dos posts (.prose)
+   e tema de syntax highlight (classes .hljs-*) alinhado à paleta.
+   ============================================================ */
+
+.prose {
+  max-width: var(--content-max);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose > * + * { margin-top: 1.25em; }
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: 2.25em;
+  scroll-margin-top: 5rem; /* compensa o header fixo ao navegar por âncora */
+}
+.prose h2 { font-size: 1.6rem; }
+.prose h3 { font-size: 1.25rem; }
+.prose h4 { font-size: 1.05rem; }
+
+/* Link de âncora nos títulos (aparece no hover) */
+.prose .heading-anchor {
+  margin-left: 0.4em;
+  color: var(--color-text-faint);
+  opacity: 0;
+  font-weight: 400;
+  transition: opacity var(--duration-fast) ease;
+}
+.prose h2:hover .heading-anchor,
+.prose h3:hover .heading-anchor,
+.prose h4:hover .heading-anchor { opacity: 1; }
+
+.prose p { margin-bottom: 0; }
+
+.prose a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-soft);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--duration-fast) ease;
+}
+.prose a:hover { text-decoration-color: currentColor; }
+
+.prose ul,
+.prose ol { padding-left: 1.4em; }
+.prose li + li { margin-top: 0.35em; }
+.prose li::marker { color: var(--color-accent); }
+
+.prose blockquote {
+  margin: 0;
+  padding: var(--space-2) var(--space-6);
+  border-left: 3px solid var(--color-accent);
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.prose blockquote p { margin: 0; }
+
+.prose img {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  margin-inline: auto;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin-block: 3em;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.prose th,
+.prose td {
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+.prose th { font-family: var(--font-display); font-weight: 600; }
+
+/* Código inline */
+.prose :not(pre) > code {
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* Blocos de código */
+.prose pre {
+  margin: 0;
+  padding: var(--space-4) var(--space-6);
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  tab-size: 2;
+}
+.prose pre code {
+  font-family: var(--font-mono);
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* Rótulo da linguagem no canto do bloco */
+.prose .code-block {
+  position: relative;
+}
+.prose .code-block[data-lang]::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+/* --- Syntax highlight (highlight.js) ---
+   Poucos tons para manter o visual sóbrio: accent para keywords,
+   neutros para o resto. */
+.hljs { color: var(--color-text); }
+.hljs-comment,
+.hljs-quote { color: var(--color-text-faint); font-style: italic; }
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-meta,
+.hljs-doctag { color: var(--color-accent-hover); }
+.hljs-string,
+.hljs-attr,
+.hljs-template-tag,
+.hljs-addition { color: #a8c48a; }
+.hljs-number,
+.hljs-literal,
+.hljs-symbol { color: #d9a25b; }
+.hljs-title,
+.hljs-title.function_,
+.hljs-title.class_,
+.hljs-name,
+.hljs-section { color: #8ab4f8; }
+.hljs-built_in,
+.hljs-type,
+.hljs-variable,
+.hljs-property { color: #c4b5e8; }
+.hljs-tag { color: var(--color-text-muted); }
+.hljs-deletion { color: var(--color-accent); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+
+:root[data-theme='light'] .hljs-string,
+:root[data-theme='light'] .hljs-attr,
+:root[data-theme='light'] .hljs-addition { color: #3d7a2a; }
+:root[data-theme='light'] .hljs-number,
+:root[data-theme='light'] .hljs-literal { color: #9a5b12; }
+:root[data-theme='light'] .hljs-title,
+:root[data-theme='light'] .hljs-name,
+:root[data-theme='light'] .hljs-section { color: #1a56b8; }
+:root[data-theme='light'] .hljs-built_in,
+:root[data-theme='light'] .hljs-type,
+:root[data-theme='light'] .hljs-variable { color: #6b45b8; }

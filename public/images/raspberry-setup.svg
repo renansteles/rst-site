@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <rect width="800" height="400" fill="#141414"/>
+  <rect x="40" y="40" width="720" height="320" rx="16" fill="none" stroke="#262626" stroke-width="2"/>
+  <text x="400" y="190" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="22" fill="#a3a3a3">Imagem de exemplo</text>
+  <text x="400" y="225" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#c41e2a">public/images/raspberry-setup.svg</text>
+</svg>

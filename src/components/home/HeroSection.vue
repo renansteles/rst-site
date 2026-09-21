@@ -1,23 +1,26 @@
 <script setup>
 import BaseButton from '../ui/BaseButton.vue'
 import { profile } from '../../content/profile'
+import { useI18n } from '../../i18n'
+
+const { t, tr } = useI18n()
 </script>
 
 <template>
   <section class="hero texture">
     <div class="container hero__inner">
-      <span class="eyebrow hero__eyebrow">{{ profile.role }}</span>
+      <span class="eyebrow hero__eyebrow">{{ tr(profile.role) }}</span>
 
       <h1 class="hero__title">
         {{ profile.name }}<span class="hero__dot">.</span>
       </h1>
 
-      <p class="hero__tagline">{{ profile.tagline }}</p>
-      <p class="hero__bio muted">{{ profile.bio }}</p>
+      <p class="hero__tagline">{{ tr(profile.tagline) }}</p>
+      <p class="hero__bio muted">{{ tr(profile.bio) }}</p>
 
       <div class="hero__actions">
-        <BaseButton to="/blog">Ler o blog</BaseButton>
-        <BaseButton to="#contato" variant="ghost">Contato</BaseButton>
+        <BaseButton to="/blog">{{ t('hero.readBlog') }}</BaseButton>
+        <BaseButton to="#contato" variant="ghost">{{ t('hero.contact') }}</BaseButton>
       </div>
     </div>
   </section>

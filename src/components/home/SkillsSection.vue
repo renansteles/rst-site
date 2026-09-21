@@ -1,23 +1,26 @@
 <script setup>
 import SectionTitle from '../ui/SectionTitle.vue'
 import { skills } from '../../content/profile'
+import { useI18n } from '../../i18n'
+
+const { t, tr } = useI18n()
 </script>
 
 <template>
   <section id="skills" class="section skills">
     <div class="container">
-      <SectionTitle eyebrow="Stack" title="Ferramentas do dia a dia" />
+      <SectionTitle :eyebrow="t('skills.eyebrow')" :title="t('skills.title')" />
 
       <div class="grid">
         <div
           v-for="(group, i) in skills"
-          :key="group.group"
+          :key="tr(group.group)"
           v-reveal="{ delay: i * 80 }"
           class="card"
         >
-          <h3 class="card__title">{{ group.group }}</h3>
+          <h3 class="card__title">{{ tr(group.group) }}</h3>
           <ul class="chips">
-            <li v-for="item in group.items" :key="item" class="chip">{{ item }}</li>
+            <li v-for="item in group.items" :key="tr(item)" class="chip">{{ tr(item) }}</li>
           </ul>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-const SITE_NAME = 'Renan Teles'
+import { useI18n } from '../i18n'
 
 // Cada view é importada com `() => import(...)`: o Vite gera um chunk separado
 // por rota e o navegador só baixa o código da página que está sendo visitada.
@@ -9,13 +8,13 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => import('../views/HomeView.vue'),
-    meta: { title: 'Sobre mim' },
+    meta: { titleKey: 'titles.home' },
   },
   {
     path: '/blog',
     name: 'blog',
     component: () => import('../views/BlogView.vue'),
-    meta: { title: 'Blog' },
+    meta: { titleKey: 'titles.blog' },
   },
   {
     path: '/blog/:slug',
@@ -27,7 +26,7 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('../views/NotFoundView.vue'),
-    meta: { title: 'Página não encontrada' },
+    meta: { titleKey: 'titles.notFound' },
   },
 ]
 
@@ -43,10 +42,14 @@ const router = createRouter({
   },
 })
 
-// Atualiza o <title> da aba a cada navegação.
+// Atualiza o <title> da aba a cada navegação (e ao trocar de idioma — ver App.vue).
 // PostView sobrescreve com o título do post depois de carregá-lo.
-router.afterEach((to) => {
-  document.title = to.meta.title ? `${to.meta.title} · ${SITE_NAME}` : SITE_NAME
-})
+export function updateTitle(route) {
+  const { t } = useI18n()
+  const site = t('site.name')
+  document.title = route.meta.titleKey ? `${t(route.meta.titleKey)} · ${site}` : site
+}
+
+router.afterEach((to) => updateTitle(to))
 
 export default router

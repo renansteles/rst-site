@@ -23,6 +23,18 @@ npm run preview    # serve o dist/ localmente para conferir o build
 | Estilo do conteúdo dos posts | `src/assets/styles/markdown.css` |
 | Linguagens com syntax highlight | `src/composables/useMarkdown.js` |
 | Rotas | `src/router/index.js` |
+| Textos da interface (PT/EN) | `src/i18n/pt-BR.js`, `src/i18n/en.js` |
+
+## Idiomas (PT-BR / EN)
+
+O botão **PT/EN** no header alterna o idioma; a escolha fica salva no navegador e, na
+primeira visita, segue o idioma do browser. Não há dependência externa — o composable
+está em `src/i18n/index.js`.
+
+- Textos da interface: `src/i18n/pt-BR.js` e `src/i18n/en.js` (mesmas chaves nos dois).
+- Conteúdo do perfil: em `src/content/profile.js`, use `L('português', 'english')` nos
+  campos que precisam de tradução; strings simples ficam iguais nos dois idiomas.
+- Posts: campo `lang` no frontmatter (veja abaixo).
 
 ## Escrevendo um post
 
@@ -34,6 +46,7 @@ title: Título do post
 date: 2025-09-20
 summary: Resumo curto que aparece no card.
 tags: [vue, infra]
+lang: pt-BR
 published: true
 ---
 
@@ -42,6 +55,7 @@ com highlight (```js, ```bash, ```nginx…), imagens, citações.
 ```
 
 - `published: false` esconde o post sem apagar o arquivo.
+- `lang: en` marca o post como inglês (padrão: `pt-BR`). O blog mostra só os posts do idioma ativo; se não houver nenhum nesse idioma, mostra todos com um selo PT/EN.
 - Imagens: coloque em `public/images/` e referencie como `/images/arquivo.png`.
 - O tempo de leitura é calculado automaticamente.
 
@@ -67,6 +81,7 @@ src/
 │   ├── blog/            PostCard, TagFilter, TagBadge
 │   └── ui/              BaseButton, SectionTitle
 ├── composables/         useTheme, usePosts, useMarkdown, useReadingTime
+├── i18n/                composable useI18n + dicionários pt-BR.js / en.js
 ├── directives/          v-reveal (animação ao rolar)
 ├── content/             profile.js + posts/*.md
 └── assets/

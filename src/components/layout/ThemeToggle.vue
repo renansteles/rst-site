@@ -1,15 +1,17 @@
 <script setup>
 import { useTheme } from '../../composables/useTheme'
+import { useI18n } from '../../i18n'
 
 const { theme, toggle } = useTheme()
+const { t } = useI18n()
 </script>
 
 <template>
   <button
     class="toggle"
     type="button"
-    :aria-label="theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'"
-    :title="theme === 'dark' ? 'Modo claro' : 'Modo escuro'"
+    :aria-label="theme === 'dark' ? t('theme.toLight') : t('theme.toDark')"
+    :title="theme === 'dark' ? t('theme.light') : t('theme.dark')"
     @click="toggle"
   >
     <!-- Sol -->

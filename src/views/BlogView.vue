@@ -5,22 +5,36 @@ import { usePosts } from '../composables/usePosts'
 import PostCard from '../components/blog/PostCard.vue'
 import TagFilter from '../components/blog/TagFilter.vue'
 
+import { useI18n } from '../i18n'
+
 const route = useRoute()
-const { tags, getByTag } = usePosts()
+const { getByLang } = usePosts()
+const { t, locale } = useI18n()
+
+// Posts do idioma ativo (ou todos, se ainda não houver posts nesse idioma)
+const byLang = computed(() => getByLang(locale.value))
+
+// Tags só dos posts visíveis
+const tags = computed(() => {
+  const set = new Set()
+  byLang.value.posts.forEach((p) => p.tags.forEach((tag) => set.add(tag)))
+  return [...set].sort((a, b) => a.localeCompare(b))
+})
 
 // A tag ativa vem da URL (/blog?tag=vue), então o filtro é compartilhável
 const activeTag = computed(() => (typeof route.query.tag === 'string' ? route.query.tag : ''))
-const filtered = computed(() => getByTag(activeTag.value))
+const filtered = computed(() =>
+  activeTag.value ? byLang.value.posts.filter((p) => p.tags.includes(activeTag.value)) : byLang.value.posts,
+)
 </script>
 
 <template>
   <div class="container blog">
     <header class="blog__header">
-      <span class="eyebrow">Blog</span>
-      <h1 class="blog__title">Notas de engenharia<span class="dot">.</span></h1>
-      <p class="muted blog__intro">
-        Textos sobre desenvolvimento, infraestrutura caseira e o que o tatame ensina sobre construir software.
-      </p>
+      <span class="eyebrow">{{ t('blog.eyebrow') }}</span>
+      <h1 class="blog__title">{{ t('blog.title') }}<span class="dot">.</span></h1>
+      <p class="muted blog__intro">{{ t('blog.intro') }}</p>
+      <p v-if="byLang.fallback" class="muted notice">{{ t('blog.fallbackNotice') }}</p>
       <TagFilter v-if="tags.length" :tags="tags" :active="activeTag" />
     </header>
 
@@ -28,7 +42,7 @@ const filtered = computed(() => getByTag(activeTag.value))
       <PostCard v-for="post in filtered" :key="post.slug" :post="post" />
     </TransitionGroup>
 
-    <p v-else class="muted empty">Nenhum post com a tag <strong>#{{ activeTag }}</strong> ainda.</p>
+    <p v-else class="muted empty">{{ t('blog.emptyTag', { tag: activeTag }) }}</p>
   </div>
 </template>
 
@@ -65,6 +79,12 @@ const filtered = computed(() => getByTag(activeTag.value))
 }
 
 .empty { padding-block: var(--space-8); }
+
+.notice {
+  margin: 0;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+}
 
 /* Animação ao trocar o filtro */
 .list-enter-active,

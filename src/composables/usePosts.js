@@ -62,6 +62,7 @@ const allPosts = Object.entries(modules)
       summary: data.summary ?? '',
       date: data.date ?? '1970-01-01',
       tags: Array.isArray(data.tags) ? data.tags : [],
+      lang: data.lang ?? 'pt-BR', // idioma do post (frontmatter `lang: en` para inglês)
       published: data.published !== false, // publicado por padrão
       readingTime: useReadingTime(content),
       content, // markdown cru; é convertido em HTML só no PostView
@@ -84,13 +85,22 @@ export function usePosts() {
 
   const getByTag = (tag) => (tag ? allPosts.filter((p) => p.tags.includes(tag)) : allPosts)
 
-  return { posts, tags, getPost, getByTag }
+  /**
+   * Posts no idioma pedido. Se não houver nenhum nesse idioma, devolve todos
+   * (com `fallback: true`) — melhor mostrar posts em PT do que uma lista vazia.
+   */
+  const getByLang = (lang) => {
+    const list = allPosts.filter((p) => p.lang === lang)
+    return list.length ? { posts: list, fallback: false } : { posts: allPosts, fallback: true }
+  }
+
+  return { posts, tags, getPost, getByTag, getByLang }
 }
 
-/** Formata "2024-03-15" → "15 mar 2024" */
-export function formatDate(iso) {
+/** Formata "2024-03-15" → "15 de mar. de 2024" (pt-BR) ou "Mar 15, 2024" (en) */
+export function formatDate(iso, locale = 'pt-BR') {
   const [y, m, d] = iso.split('-').map(Number)
-  return new Date(y, m - 1, d).toLocaleDateString('pt-BR', {
+  return new Date(y, m - 1, d).toLocaleDateString(locale, {
     day: '2-digit',
     month: 'short',
     year: 'numeric',

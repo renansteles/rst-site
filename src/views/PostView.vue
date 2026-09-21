@@ -4,6 +4,7 @@ import { usePosts, formatDate } from '../composables/usePosts'
 import { useMarkdown } from '../composables/useMarkdown'
 import TagBadge from '../components/blog/TagBadge.vue'
 import NotFoundView from './NotFoundView.vue'
+import { useI18n } from '../i18n'
 import '../assets/styles/markdown.css' // só carrega junto com esta rota
 
 // O slug chega como prop porque a rota tem `props: true`
@@ -13,13 +14,16 @@ const props = defineProps({
 
 const { getPost } = usePosts()
 const { render } = useMarkdown()
+const { t, locale } = useI18n()
 
 const post = computed(() => getPost(props.slug))
-const html = computed(() => (post.value ? render(post.value.content) : ''))
+const html = computed(() =>
+  post.value ? render(post.value.content, { anchorLabel: t('post.anchor') }) : '',
+)
 
 // Título da aba com o nome do post
 watchEffect(() => {
-  if (post.value) document.title = `${post.value.title} · Renan Teles`
+  if (post.value) document.title = `${post.value.title} · ${t('site.name')}`
 })
 </script>
 
@@ -29,15 +33,15 @@ watchEffect(() => {
   <article v-else class="container post">
     <header class="post__header">
       <RouterLink :to="{ name: 'blog' }" class="post__back">
-        <span aria-hidden="true">←</span> Todos os posts
+        <span aria-hidden="true">←</span> {{ t('post.allPosts') }}
       </RouterLink>
 
       <h1 class="post__title">{{ post.title }}</h1>
 
       <div class="post__meta">
-        <time :datetime="post.date">{{ formatDate(post.date) }}</time>
+        <time :datetime="post.date">{{ formatDate(post.date, locale) }}</time>
         <span aria-hidden="true">·</span>
-        <span>{{ post.readingTime }} min de leitura</span>
+        <span>{{ t('blog.readingTime', { n: post.readingTime }) }}</span>
       </div>
 
       <div v-if="post.tags.length" class="post__tags">
@@ -46,11 +50,11 @@ watchEffect(() => {
     </header>
 
     <!-- v-html é seguro aqui: o conteúdo vem de arquivos do próprio projeto -->
-    <div class="prose" v-html="html"></div>
+    <div class="prose" :lang="post.lang" v-html="html"></div>
 
     <footer class="post__footer">
       <RouterLink :to="{ name: 'blog' }" class="post__back">
-        <span aria-hidden="true">←</span> Voltar para o blog
+        <span aria-hidden="true">←</span> {{ t('post.back') }}
       </RouterLink>
     </footer>
   </article>

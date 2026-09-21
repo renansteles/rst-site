@@ -48,6 +48,9 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;')
 }
 
+// Rótulo acessível do link "#" nos títulos; definido a cada render() conforme o idioma
+let anchorLabel = 'Link para esta seção'
+
 // Instância própria do Marked para não vazar configuração global
 const marked = new Marked({
   gfm: true,
@@ -68,7 +71,7 @@ const marked = new Marked({
     heading({ tokens, depth }) {
       const text = this.parser.parseInline(tokens)
       const id = slugify(tokens.map((t) => t.raw ?? '').join(''))
-      return `<h${depth} id="${id}">${text}<a class="heading-anchor" href="#${id}" aria-label="Link para esta seção">#</a></h${depth}>\n`
+      return `<h${depth} id="${id}">${text}<a class="heading-anchor" href="#${id}" aria-label="${anchorLabel}">#</a></h${depth}>\n`
     },
 
     // Imagens com lazy loading (o navegador só baixa ao rolar até elas)
@@ -94,6 +97,9 @@ const marked = new Marked({
  * não há sanitização — se um dia os posts vierem de usuários, adicione DOMPurify.
  */
 export function useMarkdown() {
-  const render = (markdown) => marked.parse(markdown)
+  const render = (markdown, options = {}) => {
+    if (options.anchorLabel) anchorLabel = options.anchorLabel
+    return marked.parse(markdown)
+  }
   return { render }
 }

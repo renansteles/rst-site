@@ -1,5 +1,8 @@
 <script setup>
 import TagBadge from './TagBadge.vue'
+import { useI18n } from '../../i18n'
+
+const { t } = useI18n()
 
 defineProps({
   tags: { type: Array, required: true },
@@ -8,8 +11,8 @@ defineProps({
 </script>
 
 <template>
-  <nav class="filter" aria-label="Filtrar por tag">
-    <TagBadge tag="todos" :to="{ name: 'blog' }" :active="!active" />
+  <nav class="filter" :aria-label="t('blog.filterLabel')">
+    <TagBadge :tag="t('blog.allTags')" :to="{ name: 'blog' }" :active="!active" />
     <TagBadge
       v-for="tag in tags"
       :key="tag"

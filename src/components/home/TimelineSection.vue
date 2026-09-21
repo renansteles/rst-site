@@ -1,20 +1,20 @@
 <script setup>
 import SectionTitle from '../ui/SectionTitle.vue'
 import { timeline } from '../../content/profile'
+import { useI18n } from '../../i18n'
 
-// Rótulo exibido para cada tipo de item
-const typeLabel = { career: 'Carreira', bjj: 'Jiu-Jitsu', education: 'Formação' }
+const { t, tr } = useI18n()
 </script>
 
 <template>
   <section id="trajetoria" class="section">
     <div class="container">
-      <SectionTitle eyebrow="Trajetória" title="Carreira e tatame, lado a lado" />
+      <SectionTitle :eyebrow="t('timeline.eyebrow')" :title="t('timeline.title')" />
 
       <ol class="timeline">
         <li
           v-for="(item, i) in timeline"
-          :key="`${item.year}-${item.title}`"
+          :key="`${item.year}-${item.type}-${i}`"
           v-reveal="{ delay: Math.min(i * 60, 300) }"
           class="item"
           :class="`item--${item.type}`"
@@ -23,13 +23,13 @@ const typeLabel = { career: 'Carreira', bjj: 'Jiu-Jitsu', education: 'Formação
 
           <div class="item__meta">
             <span class="item__year">{{ item.year }}</span>
-            <span class="item__type">{{ typeLabel[item.type] }}</span>
+            <span class="item__type">{{ t(`timeline.types.${item.type}`) }}</span>
           </div>
 
           <div class="item__body">
-            <h3 class="item__title">{{ item.title }}</h3>
-            <p v-if="item.org" class="item__org">{{ item.org }}</p>
-            <p class="item__desc muted">{{ item.description }}</p>
+            <h3 class="item__title">{{ tr(item.title) }}</h3>
+            <p v-if="tr(item.org)" class="item__org">{{ tr(item.org) }}</p>
+            <p class="item__desc muted">{{ tr(item.description) }}</p>
           </div>
         </li>
       </ol>

@@ -1,6 +1,8 @@
 <script setup>
 import { profile } from '../../content/profile'
+import { useI18n } from '../../i18n'
 
+const { t } = useI18n()
 const year = new Date().getFullYear()
 </script>
 
@@ -8,11 +10,11 @@ const year = new Date().getFullYear()
   <footer class="footer texture">
     <div class="container footer__inner">
       <p class="footer__copy">© {{ year }} {{ profile.name }}</p>
-      <nav class="footer__links" aria-label="Rodapé">
+      <nav class="footer__links" :aria-label="t('nav.footer')">
         <a v-if="profile.links.linkedin" :href="profile.links.linkedin" target="_blank" rel="noopener">LinkedIn</a>
         <a v-if="profile.links.instagram" :href="profile.links.instagram" target="_blank" rel="noopener">Instagram</a>
         <a v-if="profile.links.github" :href="profile.links.github" target="_blank" rel="noopener">GitHub</a>
-        <RouterLink to="/blog">Blog</RouterLink>
+        <RouterLink to="/blog">{{ t('nav.blog') }}</RouterLink>
       </nav>
     </div>
   </footer>

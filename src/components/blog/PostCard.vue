@@ -1,10 +1,13 @@
 <script setup>
 import TagBadge from './TagBadge.vue'
 import { formatDate } from '../../composables/usePosts'
+import { useI18n } from '../../i18n'
 
 defineProps({
   post: { type: Object, required: true },
 })
+
+const { t, locale } = useI18n()
 </script>
 
 <template>
@@ -19,9 +22,11 @@ defineProps({
 
     <footer class="card__footer">
       <div class="card__meta">
-        <time :datetime="post.date">{{ formatDate(post.date) }}</time>
+        <time :datetime="post.date">{{ formatDate(post.date, locale) }}</time>
         <span aria-hidden="true">·</span>
-        <span>{{ post.readingTime }} min de leitura</span>
+        <span>{{ t('blog.readingTime', { n: post.readingTime }) }}</span>
+        <!-- Indica o idioma quando o post não está no idioma da interface -->
+        <span v-if="post.lang !== locale" class="card__lang">{{ t(`blog.langBadge.${post.lang}`) }}</span>
       </div>
       <div v-if="post.tags.length" class="card__tags">
         <TagBadge v-for="tag in post.tags" :key="tag" :tag="tag" :to="{ name: 'blog', query: { tag } }" />
@@ -87,6 +92,14 @@ defineProps({
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text-faint);
+}
+
+.card__lang {
+  margin-left: auto;
+  padding: 0 0.4em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.08em;
 }
 
 .card__tags {

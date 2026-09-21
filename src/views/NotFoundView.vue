@@ -1,15 +1,18 @@
 <script setup>
 import BaseButton from '../components/ui/BaseButton.vue'
+import { useI18n } from '../i18n'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="container notfound">
-    <span class="eyebrow">Erro 404</span>
-    <h1 class="notfound__title">Nada por aqui<span class="dot">.</span></h1>
-    <p class="muted">A página que você procura não existe ou foi movida.</p>
+    <span class="eyebrow">{{ t('notFound.eyebrow') }}</span>
+    <h1 class="notfound__title">{{ t('notFound.title') }}<span class="dot">.</span></h1>
+    <p class="muted">{{ t('notFound.text') }}</p>
     <div class="notfound__actions">
-      <BaseButton to="/">Voltar ao início</BaseButton>
-      <BaseButton to="/blog" variant="ghost">Ver o blog</BaseButton>
+      <BaseButton to="/">{{ t('notFound.home') }}</BaseButton>
+      <BaseButton to="/blog" variant="ghost">{{ t('notFound.blog') }}</BaseButton>
     </div>
   </div>
 </template>

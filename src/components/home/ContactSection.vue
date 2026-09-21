@@ -2,6 +2,9 @@
 import { computed } from 'vue'
 import SectionTitle from '../ui/SectionTitle.vue'
 import { profile } from '../../content/profile'
+import { useI18n } from '../../i18n'
+
+const { t } = useI18n()
 
 // Monta a lista de contatos a partir de profile.links, ignorando os vazios
 const contacts = computed(() =>
@@ -9,7 +12,7 @@ const contacts = computed(() =>
     { key: 'linkedin', label: 'LinkedIn', value: profile.links.linkedin?.replace(/^https?:\/\//, ''), href: profile.links.linkedin },
     { key: 'instagram', label: 'Instagram', value: profile.links.instagram?.replace(/^https?:\/\//, ''), href: profile.links.instagram },
     { key: 'github', label: 'GitHub', value: profile.links.github?.replace(/^https?:\/\//, ''), href: profile.links.github },
-    { key: 'email', label: 'E-mail', value: profile.links.email, href: `mailto:${profile.links.email}` },
+    { key: 'email', label: t('contact.email'), value: profile.links.email, href: `mailto:${profile.links.email}` },
   ].filter((c) => c.value),
 )
 </script>
@@ -17,10 +20,8 @@ const contacts = computed(() =>
 <template>
   <section id="contato" class="section">
     <div class="container">
-      <SectionTitle eyebrow="Contato" title="Vamos conversar">
-        <p class="muted intro">
-          Aberto a projetos, colaborações e boas conversas sobre engenharia ou treino.
-        </p>
+      <SectionTitle :eyebrow="t('contact.eyebrow')" :title="t('contact.title')">
+        <p class="muted intro">{{ t('contact.intro') }}</p>
       </SectionTitle>
 
       <ul class="contacts">

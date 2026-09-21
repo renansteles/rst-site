@@ -1,7 +1,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import ThemeToggle from './ThemeToggle.vue'
+import LocaleToggle from './LocaleToggle.vue'
 import { profile } from '../../content/profile'
+import { useI18n } from '../../i18n'
+
+const { t } = useI18n()
 
 // Aplica uma borda/sombra no header só depois que a página rola um pouco
 const scrolled = ref(false)
@@ -18,18 +22,19 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 <template>
   <header class="header" :class="{ 'is-scrolled': scrolled }">
     <div class="container header__inner">
-      <RouterLink to="/" class="brand" aria-label="Início">
+      <RouterLink to="/" class="brand" :aria-label="t('nav.home')">
         <span class="brand__mark" aria-hidden="true"></span>
         <span class="brand__name">{{ profile.name }}</span>
       </RouterLink>
 
-      <nav class="nav" aria-label="Principal">
-        <RouterLink to="/" class="nav__link">Sobre</RouterLink>
-        <RouterLink to="/blog" class="nav__link">Blog</RouterLink>
+      <nav class="nav" :aria-label="t('nav.main')">
+        <RouterLink to="/" class="nav__link">{{ t('nav.about') }}</RouterLink>
+        <RouterLink to="/blog" class="nav__link">{{ t('nav.blog') }}</RouterLink>
         <!-- Link externo para a app de estudos (subdomínio, deploy independente) -->
         <a href="https://estudos.rst.dev.br" class="nav__link nav__link--external" target="_blank" rel="noopener">
-          Estudos<span class="nav__ext" aria-hidden="true">↗</span>
+          {{ t('nav.studies') }}<span class="nav__ext" aria-hidden="true">↗</span>
         </a>
+        <LocaleToggle />
         <ThemeToggle />
       </nav>
     </div>

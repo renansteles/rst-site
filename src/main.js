@@ -16,8 +16,7 @@ import '@fontsource/jetbrains-mono/400.css'
 // 1. tokens compartilhados (pacote @rst/design-tokens — mesmo arquivo usado no "estudos")
 // 2. aliases/tokens específicos deste site
 // 3. base (reset, tipografia, utilitários)
-import '@rst/design-tokens/design-tokens.css'
-import './assets/styles/tokens.css'
+import './assets/styles/design-tokens.css'
 import './assets/styles/base.css'
 
 createApp(App)

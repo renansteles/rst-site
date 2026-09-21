@@ -25,12 +25,13 @@ import { profile } from '../../content/profile'
 
 <style scoped>
 .hero {
-  padding-block: var(--space-16) var(--space-12);
+  /* topo menor: aproxima o conteúdo da navbar; base mantém o respiro até a timeline */
+  padding-block: var(--space-8) var(--space-12);
   overflow: hidden;
 }
 
 @media (min-width: 768px) {
-  .hero { padding-block: var(--space-24) var(--space-16); }
+  .hero { padding-block: var(--space-12) var(--space-16); }
 }
 
 .hero__inner {

@@ -12,11 +12,12 @@ import '@fontsource/inter/700.css'
 import '@fontsource/inter/800.css'
 import '@fontsource/jetbrains-mono/400.css'
 
-// Estilos globais. Ordem importa:
-// 1. tokens compartilhados (pacote @rst/design-tokens — mesmo arquivo usado no "estudos")
-// 2. aliases/tokens específicos deste site
-// 3. base (reset, tipografia, utilitários)
+// Estilos globais. Ordem importa (cada arquivo usa variáveis do anterior):
+// 1. design-tokens.css — cores, fontes, raios, sombras, durações
+// 2. tokens.css        — aliases (--font-display, --color-surface…) + espaçamento/layout
+// 3. base.css          — reset, tipografia, .container/.section e utilitários
 import './assets/styles/design-tokens.css'
+import './assets/styles/tokens.css'
 import './assets/styles/base.css'
 
 createApp(App)

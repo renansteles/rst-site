@@ -1,9 +1,9 @@
 /* ============================================================
    TOKENS DO PROJETO
-   Cores, fontes, raios, sombras e timings vêm do pacote compartilhado
-   @rst/design-tokens (importado antes deste arquivo em main.js).
+   Cores, fontes, raios, sombras e timings vêm de design-tokens.css
+   (importado antes deste arquivo em main.js).
    Aqui ficam apenas ALIASES e tokens específicos deste site.
-   Para mudar a identidade visual, edite o design-tokens.css do pacote.
+   Para mudar a identidade visual, edite o design-tokens.css.
    ============================================================ */
 
 :root {

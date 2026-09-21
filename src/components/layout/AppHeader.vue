@@ -26,6 +26,10 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
       <nav class="nav" aria-label="Principal">
         <RouterLink to="/" class="nav__link">Sobre</RouterLink>
         <RouterLink to="/blog" class="nav__link">Blog</RouterLink>
+        <!-- Link externo para a app de estudos (subdomínio, deploy independente) -->
+        <a href="https://estudos.rst.dev.br" class="nav__link nav__link--external" target="_blank" rel="noopener">
+          Estudos<span class="nav__ext" aria-hidden="true">↗</span>
+        </a>
         <ThemeToggle />
       </nav>
     </div>
@@ -112,5 +116,20 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll))
 .nav__link:hover::after,
 .nav__link.router-link-exact-active::after {
   transform: scaleX(1);
+}
+
+/* Setinha discreta indicando link externo */
+.nav__ext {
+  display: inline-block;
+  margin-left: 0.2em;
+  font-size: 0.75em;
+  color: var(--color-text-faint);
+  transition:
+    transform var(--duration-base) var(--ease-impact),
+    color var(--duration-fast) ease;
+}
+.nav__link--external:hover .nav__ext {
+  color: var(--color-accent);
+  transform: translate(2px, -2px);
 }
 </style>

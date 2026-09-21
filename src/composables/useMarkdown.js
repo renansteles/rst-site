@@ -12,6 +12,7 @@ import json from 'highlight.js/lib/languages/json'
 import yaml from 'highlight.js/lib/languages/yaml'
 import nginx from 'highlight.js/lib/languages/nginx'
 import python from 'highlight.js/lib/languages/python'
+import ini from 'highlight.js/lib/languages/ini' // units do systemd, .toml, .ini
 
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('js', javascript)
@@ -28,6 +29,8 @@ hljs.registerLanguage('yaml', yaml)
 hljs.registerLanguage('yml', yaml)
 hljs.registerLanguage('nginx', nginx)
 hljs.registerLanguage('python', python)
+hljs.registerLanguage('ini', ini)
+hljs.registerLanguage('toml', ini)
 
 /** "Configurando o Nginx" → "configurando-o-nginx" (para ids de âncora) */
 function slugify(text) {
